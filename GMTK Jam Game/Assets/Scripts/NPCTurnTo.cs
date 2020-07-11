@@ -14,8 +14,8 @@ public class NPCTurnTo : MonoBehaviour
 
     public void TurnTo(Transform target, Transform toLook)
     {
-        Debug.Log(npcTop.transform.forward);
-        Debug.Log(npcBottom.transform.forward);
+        //Debug.Log(npcTop.transform.forward);
+        //Debug.Log(npcBottom.transform.forward);
 
         Vector3 temp = toLook.eulerAngles;   
         toLook.LookAt(target);
