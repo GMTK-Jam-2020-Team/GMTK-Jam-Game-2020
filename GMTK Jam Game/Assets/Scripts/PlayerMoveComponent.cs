@@ -10,6 +10,7 @@ public class PlayerMoveComponent : MonoBehaviour
     private PlayerCameraComponent pcc;
 
     public AnimationCurve moveCurve;
+    public float speedModifier;
 
     private void Start()
     {
@@ -19,6 +20,6 @@ public class PlayerMoveComponent : MonoBehaviour
 
     private void Update()
     {
-        cc.SimpleMove(pcc.forward * moveCurve.Evaluate(Time.time));
+        cc.SimpleMove(pcc.forward * moveCurve.Evaluate(Time.time) * speedModifier);
     }
 }
