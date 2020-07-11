@@ -29,7 +29,7 @@ public enum HandState
     HandState_Closed
 }
 
-public class MoveHands : MonoBehaviour
+public class PlayerHandComponent : MonoBehaviour
 {
     public Hand leftHand;
     public Hand rightHand;
@@ -41,6 +41,8 @@ public class MoveHands : MonoBehaviour
 
     private Vector2 leftHandPos;
     private Vector2 rightHandPos;
+
+    public Vector2[] GetHandPositions() { return new Vector2[]{ leftHandPos, rightHandPos }; }
 
     private void Awake()
     {
