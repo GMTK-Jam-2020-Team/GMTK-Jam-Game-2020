@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +15,8 @@ public struct Hand
 
     public HandState state;
 
+    public Animator animator;
+
     public void Update(Vector2 inputPos)
     {
         Vector3 newPos = inputPos * movementBounds;
@@ -20,6 +24,20 @@ public struct Hand
 
         Vector3 handDirection = pivot.localPosition - gameObject.transform.localPosition;
         gameObject.transform.localRotation = Quaternion.FromToRotation(Vector3.down, handDirection.normalized);
+
+        UpdateAnimator();
+    }
+
+    public void UpdateAnimator()
+    {
+        if (state == HandState.HandState_Closed)
+        {
+            animator.SetBool("Grabbing", true);
+        }
+        else if (state == HandState.HandState_Open)
+        {
+            animator.SetBool("Grabbing", false);
+        }
     }
 }
 
@@ -61,7 +79,6 @@ public class PlayerHandComponent : MonoBehaviour
 
         inputActions.ZG_Main.RightGrab.performed += ctx => rightHand.state = HandState.HandState_Closed;
         inputActions.ZG_Main.RightGrab.canceled  += ctx => rightHand.state = HandState.HandState_Open;
-
     }
 
     private void OnEnable()
