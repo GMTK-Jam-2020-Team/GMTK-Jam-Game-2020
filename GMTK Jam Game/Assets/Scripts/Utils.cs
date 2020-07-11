@@ -44,3 +44,39 @@ public class Bounds2D
     }
 }
 
+[System.Serializable]
+public struct Timer
+{
+    public bool looping;
+    public float currentTime;
+    public float maxTime;
+
+    public Timer(float maxTime = 1, bool looping = false)
+    {
+        this.maxTime = maxTime;
+        this.looping = looping;
+        currentTime = 0;
+    }
+
+    public void Update(float deltaTime)
+    {
+        if (!IsExpired())
+        {
+            currentTime += deltaTime;
+        }
+        else if(looping)
+        {
+            currentTime -= maxTime;
+        }
+    }
+
+    public bool IsExpired()
+    {
+        return currentTime >= maxTime;
+    }
+
+    public void Reset()
+    {
+        currentTime = 0;
+    }
+}

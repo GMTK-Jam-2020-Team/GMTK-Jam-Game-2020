@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct MoveParams
-{
-    public float moveSpeed;
-    public float moveSize;
-    public float moveInteral;
-}
-
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerCameraComponent))]
 public class PlayerMoveComponent : MonoBehaviour
@@ -17,9 +9,7 @@ public class PlayerMoveComponent : MonoBehaviour
     private CharacterController cc;
     private PlayerCameraComponent pcc;
 
-    public MoveParams moveParams;
-
-    private float prevMoveTime;
+    public AnimationCurve moveCurve;
 
     private void Start()
     {
@@ -29,6 +19,6 @@ public class PlayerMoveComponent : MonoBehaviour
 
     private void Update()
     {
-        cc.SimpleMove(pcc.forward * moveParams.moveSpeed);
+        cc.SimpleMove(pcc.forward * moveCurve.Evaluate(Time.time));
     }
 }
