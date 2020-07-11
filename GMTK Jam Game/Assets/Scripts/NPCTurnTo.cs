@@ -23,13 +23,14 @@ public class NPCTurnTo : MonoBehaviour
         toLook.eulerAngles = new Vector3(temp.x, toLook.eulerAngles.y - 180.0f, temp.z);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-       
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         TurnTo(player, npcTop.transform);
