@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //using UnityEditor;
 //#endif
 
-[ExecuteInEditMode()]
+//[ExecuteInEditMode()]
 public class ProgressBar : MonoBehaviour
 {
 //#if UNITY_EDITOR

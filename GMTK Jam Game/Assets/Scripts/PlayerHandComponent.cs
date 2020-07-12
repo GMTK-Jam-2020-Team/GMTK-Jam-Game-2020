@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,10 +14,13 @@ public struct Hand
 
     public GameObject holding;
 
+    public Vector2 throwForce;
+
     public Bounds2D movementBounds;
     public float lerpRate;
 
     public float grabRayLimit;
+    public float grabSphereRayRadius;
 
     public HandState state;
 
@@ -65,9 +68,10 @@ public struct Hand
         int layerMask = LayerMask.GetMask("Grabbable");
         Ray ray = new Ray(rayOrigin, gameObject.transform.position - rayOrigin);
         RaycastHit hit = new RaycastHit();
-        if(Physics.Raycast(ray, out hit, grabRayLimit, layerMask))
+        if(Physics.SphereCast(ray, grabSphereRayRadius, out hit, grabRayLimit, layerMask))
         {
             holding = hit.collider.gameObject;
+            holding.layer = 0;
 
             GrabbableComponent grabbableComponent;
             if (holding.TryGetComponent(out grabbableComponent))
@@ -98,6 +102,8 @@ public struct Hand
     {
         if(holding)
         {
+            holding.layer = LayerMask.NameToLayer("Grabbable");
+
             GrabbableComponent grabbableComponent;
             if (holding.TryGetComponent(out grabbableComponent))
             {
@@ -116,6 +122,9 @@ public struct Hand
 
             holdRB.isKinematic = false;
 
+            holdRB.AddForce(gameObject.transform.forward * throwForce.x + Vector3.up * throwForce.y, ForceMode.Impulse);
+
+            // TODO: Don't assume that every object wants to be thrown
             Collider holdCollider;
             if (holding.TryGetComponent(out holdCollider))
             {

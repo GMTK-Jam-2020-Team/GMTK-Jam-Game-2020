@@ -35,13 +35,9 @@ public class HungerBar : MonoBehaviour
         return (movementMag > 0);
     }
 
-    bool CheckDead()
+    public bool CheckDead()
     {
-        if (hungerBar.current <= 0.0f)
-        {
-            return true;
-        }
-        return false;
+        return (hungerBar.current <= 0.0f);
     }
 
     void LoseHunger()

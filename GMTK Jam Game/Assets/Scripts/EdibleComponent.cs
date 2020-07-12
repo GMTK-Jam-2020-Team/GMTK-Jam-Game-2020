@@ -7,6 +7,9 @@ public class EdibleComponent : UsableComponent
 {
     public UnityEvent onEat;
 
+    public GameObject eatParticles;
+    public Vector3 particleOffset;
+
     //TODO: Make this less bad
     private HungerBar hb;
 
@@ -39,6 +42,25 @@ public class EdibleComponent : UsableComponent
         if (Time.time - lastEatTime > eatDelay)
         {
             Debug.Log("NOM");
+
+            if(eatParticles)
+            {
+                GameObject ep = Instantiate(eatParticles);
+                ep.transform.position = transform.position;
+                ep.transform.rotation = transform.rotation;
+
+                ParticleSystem particles;
+                if(ep.TryGetComponent(out particles))
+                {
+                    particles.Play();
+                }
+                else
+                {
+                    Debug.LogError("Eat particle object assigned doesn't even have a particle emitter. Like what..? Seriously?");
+                }
+
+                Destroy(ep, 5.0f);
+            }
 
             lastEatTime = Time.time;
 
