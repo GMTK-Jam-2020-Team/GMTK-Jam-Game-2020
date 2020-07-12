@@ -141,6 +141,8 @@ MonoBehaviour:
   eatParticles: {fileID: 6859680260873464831, guid: f20d663f46727fc46b5427fa3309b779,
     type: 3}
   particleOffset: {x: 0, y: -0.5, z: 0.75}
+  eatSound: {fileID: 7801476006015062166, guid: 75433aee720b736459e08e78d826df84,
+    type: 3}
   tolerence: 0.225
   value: 0
   uses: 3

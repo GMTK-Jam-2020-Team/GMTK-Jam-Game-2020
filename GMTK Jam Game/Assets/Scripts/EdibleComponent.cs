@@ -10,6 +10,8 @@ public class EdibleComponent : UsableComponent
     public GameObject eatParticles;
     public Vector3 particleOffset;
 
+    public GameObject eatSound;
+
     //TODO: Make this less bad
     private HungerBar hb;
 
@@ -60,6 +62,25 @@ public class EdibleComponent : UsableComponent
                 }
 
                 Destroy(ep, 5.0f);
+            }
+
+            if(eatSound)
+            {
+                GameObject ep = Instantiate(eatSound);
+                ep.transform.position = transform.position;
+                ep.transform.rotation = transform.rotation;
+
+                AudioSource audio;
+                if (ep.TryGetComponent(out audio))
+                {
+                    audio.Play();
+                }
+                else
+                {
+                    Debug.LogError("Eat sound object assigned doesn't even have an audio source. Like what..? Seriously?");
+                }
+
+                Destroy(ep, audio.clip.length);
             }
 
             lastEatTime = Time.time;

@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 51240d4668b16a2469567161ab362703
+  - enabled: 0
     path: Assets/Scenes/Gym_Zombie.unity
     guid: dc09392cb7235f743ac28c00716e2595
+  - enabled: 1
+    path: Assets/Scenes/ZG_01.unity
+    guid: 5e0c0ce24ebc28e41ad5514d23f2f242
   m_configObjects: {}
