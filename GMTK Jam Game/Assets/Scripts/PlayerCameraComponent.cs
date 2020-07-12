@@ -51,9 +51,12 @@ public class PlayerCameraComponent : MonoBehaviour
 
     private void Update()
     {
+        if(!phc.disableLook)
+        {
         var lookInput = GetLookInput();
         currentAngles += lookInput * lookSpeed;
         currentAngles.y = Mathf.Clamp(currentAngles.y, yLookLimits.x, yLookLimits.y);
         headRoot.localRotation = Quaternion.Euler(-currentAngles.y, currentAngles.x, 0);
+        }
     }
 }

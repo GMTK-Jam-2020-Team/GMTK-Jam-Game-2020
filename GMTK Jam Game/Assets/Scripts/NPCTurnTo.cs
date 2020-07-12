@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class NPCTurnTo : MonoBehaviour
 {
-    public GameObject npcTop;
-    public GameObject npcBottom;
+    public List<GameObject> npcComponents = new List<GameObject>();
+
 
     public Transform player;
 
@@ -14,9 +14,6 @@ public class NPCTurnTo : MonoBehaviour
 
     public void TurnTo(Transform target, Transform toLook)
     {
-        //Debug.Log(npcTop.transform.forward);
-        //Debug.Log(npcBottom.transform.forward);
-
         Vector3 temp = toLook.eulerAngles;   
         toLook.LookAt(target);
 
@@ -33,7 +30,9 @@ public class NPCTurnTo : MonoBehaviour
     
     void Update()
     {
-        TurnTo(player, npcTop.transform);
-        TurnTo(player, npcBottom.transform);
+        foreach (GameObject obj in npcComponents)
+        {
+            TurnTo(player, obj.transform);
+        }
     }
 }

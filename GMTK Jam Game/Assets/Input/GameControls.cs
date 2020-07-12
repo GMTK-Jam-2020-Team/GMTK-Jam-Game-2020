@@ -49,6 +49,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""DisableLook"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab5dde3e-b7e7-4aa6-aaf6-0908c35584fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -227,6 +235,28 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""RightGrab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94369064-4983-4da1-943e-b4fbf9ac10d7"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisableLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90cd672c-9870-41d6-b96e-22ef4e200cb5"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisableLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -266,6 +296,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_ZG_Main_RightHand = m_ZG_Main.FindAction("RightHand", throwIfNotFound: true);
         m_ZG_Main_LeftGrab = m_ZG_Main.FindAction("LeftGrab", throwIfNotFound: true);
         m_ZG_Main_RightGrab = m_ZG_Main.FindAction("RightGrab", throwIfNotFound: true);
+        m_ZG_Main_DisableLook = m_ZG_Main.FindAction("DisableLook", throwIfNotFound: true);
         // EscapeToQuit
         m_EscapeToQuit = asset.FindActionMap("EscapeToQuit", throwIfNotFound: true);
         m_EscapeToQuit_Quit = m_EscapeToQuit.FindAction("Quit", throwIfNotFound: true);
@@ -322,6 +353,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_ZG_Main_RightHand;
     private readonly InputAction m_ZG_Main_LeftGrab;
     private readonly InputAction m_ZG_Main_RightGrab;
+    private readonly InputAction m_ZG_Main_DisableLook;
     public struct ZG_MainActions
     {
         private @GameControls m_Wrapper;
@@ -330,6 +362,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @RightHand => m_Wrapper.m_ZG_Main_RightHand;
         public InputAction @LeftGrab => m_Wrapper.m_ZG_Main_LeftGrab;
         public InputAction @RightGrab => m_Wrapper.m_ZG_Main_RightGrab;
+        public InputAction @DisableLook => m_Wrapper.m_ZG_Main_DisableLook;
         public InputActionMap Get() { return m_Wrapper.m_ZG_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -351,6 +384,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @RightGrab.started -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnRightGrab;
                 @RightGrab.performed -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnRightGrab;
                 @RightGrab.canceled -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnRightGrab;
+                @DisableLook.started -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnDisableLook;
+                @DisableLook.performed -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnDisableLook;
+                @DisableLook.canceled -= m_Wrapper.m_ZG_MainActionsCallbackInterface.OnDisableLook;
             }
             m_Wrapper.m_ZG_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -367,6 +403,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @RightGrab.started += instance.OnRightGrab;
                 @RightGrab.performed += instance.OnRightGrab;
                 @RightGrab.canceled += instance.OnRightGrab;
+                @DisableLook.started += instance.OnDisableLook;
+                @DisableLook.performed += instance.OnDisableLook;
+                @DisableLook.canceled += instance.OnDisableLook;
             }
         }
     }
@@ -410,6 +449,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnRightHand(InputAction.CallbackContext context);
         void OnLeftGrab(InputAction.CallbackContext context);
         void OnRightGrab(InputAction.CallbackContext context);
+        void OnDisableLook(InputAction.CallbackContext context);
     }
     public interface IEscapeToQuitActions
     {

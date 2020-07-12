@@ -10,8 +10,12 @@ public struct Hand
     public GameObject gameObject;
     public Transform pivot;
 
+    public GameObject holding;
+
     public Bounds2D movementBounds;
     public float lerpRate;
+
+    public float grabRayLimit;
 
     public HandState state;
 
@@ -39,6 +43,47 @@ public struct Hand
             animator.SetBool("Grabbing", false);
         }
     }
+
+    public void OnGrab(Vector3 rayOrigin)
+    {
+        int layerMask = LayerMask.GetMask("Grabbable");
+        Ray ray = new Ray(rayOrigin, gameObject.transform.position - rayOrigin);
+        RaycastHit hit = new RaycastHit();
+        if(Physics.Raycast(ray, out hit, grabRayLimit, layerMask))
+        {
+            Debug.Log("Grabbed " + hit.collider.name);
+            holding = hit.collider.gameObject;
+
+            GrabbableComponent grabbableComponent;
+            if (holding.TryGetComponent(out grabbableComponent))
+            {
+                grabbableComponent.OnGrab(this);
+            }
+            else
+            {
+                Debug.Log("Grabbed an object without a GrabbableComponent! Doublecheck that " + hit.collider.name + " has a GrabbableComponent attached.");
+            }
+        }
+
+    }
+
+    public void OnRelease()
+    {
+        if(holding)
+        {
+            GrabbableComponent grabbableComponent;
+            if (holding.TryGetComponent(out grabbableComponent))
+            {
+                grabbableComponent.OnRelease(this);
+            }
+            else
+            {
+                Debug.Log("Released an object without a GrabbableComponent! Doublecheck that " + holding.name + " has a GrabbableComponent attached.");
+            }
+
+            holding = null;
+        }
+    }
 }
 
 public enum HandState
@@ -52,10 +97,12 @@ public class PlayerHandComponent : MonoBehaviour
     public Hand leftHand;
     public Hand rightHand;
 
-    public float handDistMod;
+    private Camera playerCamera;
 
     // Input
     GameControls inputActions;
+
+    public bool disableLook;
 
     private Vector2 leftHandPos;
     private Vector2 rightHandPos;
@@ -64,21 +111,31 @@ public class PlayerHandComponent : MonoBehaviour
 
     private void Awake()
     {
+        //TODO: Make this *not* rely on the MainCamera just in case somebody de-tags it???
+        playerCamera = Camera.main;
+
         inputActions = new GameControls();
 
         // Left
         inputActions.ZG_Main.LeftHand.performed += ctx => leftHandPos = ctx.ReadValue<Vector2>();
         inputActions.ZG_Main.LeftHand.canceled  += ctx => leftHandPos = Vector2.zero;
-        
+
+        inputActions.ZG_Main.LeftGrab.started   += ctx => leftHand.OnGrab(playerCamera.transform.position);
         inputActions.ZG_Main.LeftGrab.performed += ctx => leftHand.state = HandState.HandState_Closed;
         inputActions.ZG_Main.LeftGrab.canceled  += ctx => leftHand.state = HandState.HandState_Open;
+        inputActions.ZG_Main.LeftGrab.canceled  += ctx => leftHand.OnRelease();
 
         // Right
         inputActions.ZG_Main.RightHand.performed += ctx => rightHandPos = ctx.ReadValue<Vector2>();
         inputActions.ZG_Main.RightHand.canceled  += ctx => rightHandPos = Vector2.zero;
 
+        inputActions.ZG_Main.RightGrab.started   += ctx => rightHand.OnGrab(playerCamera.transform.position);
         inputActions.ZG_Main.RightGrab.performed += ctx => rightHand.state = HandState.HandState_Closed;
         inputActions.ZG_Main.RightGrab.canceled  += ctx => rightHand.state = HandState.HandState_Open;
+        inputActions.ZG_Main.RightGrab.canceled  += ctx => rightHand.OnRelease();
+
+        inputActions.ZG_Main.DisableLook.performed += ctx => disableLook = true;
+        inputActions.ZG_Main.DisableLook.canceled  += ctx => disableLook = false;
     }
 
     private void OnEnable()

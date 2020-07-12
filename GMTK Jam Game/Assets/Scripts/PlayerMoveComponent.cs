@@ -12,6 +12,8 @@ public class PlayerMoveComponent : MonoBehaviour
     public AnimationCurve moveCurve;
     public float speedModifier;
 
+    public bool freezeWalk = false;
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -20,6 +22,9 @@ public class PlayerMoveComponent : MonoBehaviour
 
     private void Update()
     {
-        cc.SimpleMove(pcc.forward * moveCurve.Evaluate(Time.time) * speedModifier);
+        if (!freezeWalk)
+        {
+            cc.SimpleMove(pcc.forward * moveCurve.Evaluate(Time.time) * speedModifier);
+        }
     }
 }
