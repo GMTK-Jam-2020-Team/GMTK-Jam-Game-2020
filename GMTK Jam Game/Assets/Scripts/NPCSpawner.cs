@@ -22,8 +22,8 @@ public class NPCSpawner : MonoBehaviour
             timer = 0.0f;
 
             //Finds a range between 0 and the number of spawnable objects
-            int toSpawn = Random.Range(0, spawnables.Count - 1);
-            int whereSpawn = Random.Range(0, spawnPoints.Count - 1);
+            int toSpawn = Random.Range(0, spawnables.Count);
+            int whereSpawn = Random.Range(0, spawnPoints.Count);
             Vector3 whereInDisk = (Random.insideUnitSphere * spawnRadius + spawnPoints[whereSpawn].transform.position) ;
             whereInDisk.y = spawnPoints[whereSpawn].transform.position.y;
 
