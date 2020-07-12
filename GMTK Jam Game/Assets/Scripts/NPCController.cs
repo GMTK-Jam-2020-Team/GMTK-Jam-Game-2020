@@ -8,11 +8,13 @@ public class NPCController: MonoBehaviour
     public GameObject npcHead;
     public GameObject npcBrain;
     private Vector3 headOrigPos;
+    private Vector3 brainOrigPos;
     public List<GameObject> npcComponents = new List<GameObject>();
 
     public Transform player;
 
     private bool headOff = false;
+    private bool brainOff = false;
 
     public void TurnTo(Transform target, Transform toLook)
     {
@@ -28,10 +30,22 @@ public class NPCController: MonoBehaviour
         {
             headOrigPos = npcHead.transform.position;
         }
+        if (npcBrain != null)
+        {
+            brainOrigPos = npcBrain.transform.position;
+        }
 
         if(player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+    }
+
+    void DespawnBody()
+    {
+        if (brainOff)
+        {
+            Destroy(gameObject, 3.0f);
         }
     }
     
@@ -53,5 +67,13 @@ public class NPCController: MonoBehaviour
             headOff = true;
             npcBrain.SetActive(true);
         }
+
+        if (brainOrigPos != npcBrain.transform.position && !brainOff)
+        {
+            brainOff = true;
+            DespawnBody();
+        }
+
+
     }
 }

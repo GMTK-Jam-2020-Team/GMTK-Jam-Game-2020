@@ -20,6 +20,7 @@ public class GrabInHandComponent : GrabbableComponent
     public override void OnGrab(Hand grabber)
     {
         hand = grabber.gameObject.transform;
+        transform.parent = null;
         transform.localScale = scaleOverride;
     }
 
