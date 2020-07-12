@@ -7,4 +7,9 @@ public abstract class GrabbableComponent : MonoBehaviour
     public abstract void OnGrab(Hand grabber);
 
     public abstract void OnRelease(Hand releaser);
+
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Grabbable");
+    }
 }

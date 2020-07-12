@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class NPCTurnTo : MonoBehaviour
+public class NPCController: MonoBehaviour
 {
+    public GameObject npcHead;
+    public GameObject npcBrain;
+    private Vector3 headOrigPos;
     public List<GameObject> npcComponents = new List<GameObject>();
-
 
     public Transform player;
 
-    public bool invertForward = false;
+    private bool headOff = false;
 
     public void TurnTo(Transform target, Transform toLook)
     {
@@ -22,6 +24,11 @@ public class NPCTurnTo : MonoBehaviour
 
     void Start()
     {
+        if (npcHead != null)
+        {
+            headOrigPos = npcHead.transform.position;
+        }
+
         if(player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -30,9 +37,21 @@ public class NPCTurnTo : MonoBehaviour
     
     void Update()
     {
+        //Turn each npc towards the player
         foreach (GameObject obj in npcComponents)
         {
             TurnTo(player, obj.transform);
+        }
+
+        TurnTo(player, npcHead.transform);
+        if(npcBrain)
+            TurnTo(player, npcBrain.transform);
+
+        //Check if head has moved
+        if (headOrigPos != npcHead.transform.position && !headOff)
+        {
+            headOff = true;
+            npcBrain.SetActive(true);
         }
     }
 }

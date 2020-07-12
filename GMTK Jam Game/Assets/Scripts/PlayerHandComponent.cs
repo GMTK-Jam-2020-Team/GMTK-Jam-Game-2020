@@ -7,6 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public struct Hand
 {
+    public PlayerHandComponent ownerPHC;
+
     public GameObject gameObject;
     public Transform pivot;
 
@@ -30,6 +32,20 @@ public struct Hand
         gameObject.transform.localRotation = Quaternion.FromToRotation(Vector3.down, handDirection.normalized);
 
         UpdateAnimator();
+
+        if (holding)
+        {
+            EdibleComponent ec;
+            if(holding.TryGetComponent(out ec))
+            {
+                ec.TryEat(DistToMouth());
+            }
+        }
+    }
+
+    public float DistToMouth()
+    {
+        return Vector3.Distance(gameObject.transform.position, ownerPHC.mouthPos.position);
     }
 
     public void UpdateAnimator()
@@ -51,7 +67,6 @@ public struct Hand
         RaycastHit hit = new RaycastHit();
         if(Physics.Raycast(ray, out hit, grabRayLimit, layerMask))
         {
-            Debug.Log("Grabbed " + hit.collider.name);
             holding = hit.collider.gameObject;
 
             GrabbableComponent grabbableComponent;
@@ -97,6 +112,8 @@ public class PlayerHandComponent : MonoBehaviour
     public Hand leftHand;
     public Hand rightHand;
 
+    public Transform mouthPos;
+
     private Camera playerCamera;
 
     // Input
@@ -136,6 +153,9 @@ public class PlayerHandComponent : MonoBehaviour
 
         inputActions.ZG_Main.DisableLook.performed += ctx => disableLook = true;
         inputActions.ZG_Main.DisableLook.canceled  += ctx => disableLook = false;
+
+        leftHand.ownerPHC = this;
+        rightHand.ownerPHC = this;
     }
 
     private void OnEnable()

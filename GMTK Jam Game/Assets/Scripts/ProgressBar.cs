@@ -18,9 +18,9 @@ public class ProgressBar : MonoBehaviour
 //    }
 //#endif
 
-    public int minimum;
-    public int maximum;
-    public int current;
+    public float minimum;
+    public float maximum;
+    public float current;
     public Image mask;
 
     // Update is called once per frame
@@ -33,11 +33,11 @@ public class ProgressBar : MonoBehaviour
     void ClampValues()
     {
         //Clamps current value between minimum and maximum
-        current = (int)Mathf.Clamp(current, minimum, maximum);
+        current = Mathf.Clamp(current, minimum, maximum);
         //Clamps minimum value under maximum - 1
-        minimum = (int)Mathf.Clamp(minimum, 0.0f, maximum - 1.0f);
+        minimum = Mathf.Clamp(minimum, 0.0f, maximum - 1.0f);
         //Clamps maximum value above minimum + 1
-        maximum = (int)Mathf.Clamp(maximum, minimum, 1000000000.0f);
+        maximum = Mathf.Clamp(maximum, minimum, 1000000000.0f);
     }
 
     void GetCurrentFill()

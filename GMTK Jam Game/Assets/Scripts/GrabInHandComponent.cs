@@ -6,8 +6,6 @@ public class GrabInHandComponent : GrabbableComponent
 {
     Transform hand;
 
-    public bool useFixedUpdate;
-
     public Vector3 positionOffset;
     public Vector3 rotationalOffset;
     public Vector3 scaleOverride = Vector3.one;
@@ -42,17 +40,6 @@ public class GrabInHandComponent : GrabbableComponent
 
     private void LateUpdate()
     {
-        if (!useFixedUpdate)
-        {
-            MoveToHandTransform();
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if(useFixedUpdate)
-        {
-            MoveToHandTransform();
-        }
+        MoveToHandTransform();
     }
 }
