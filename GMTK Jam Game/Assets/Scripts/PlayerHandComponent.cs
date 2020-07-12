@@ -78,6 +78,18 @@ public struct Hand
             {
                 Debug.Log("Grabbed an object without a GrabbableComponent! Doublecheck that " + hit.collider.name + " has a GrabbableComponent attached.");
             }
+
+            Rigidbody holdRB;
+            if (holding.TryGetComponent(out holdRB))
+            {
+                holdRB.isKinematic = true;
+            }
+
+            Collider holdCollider;
+            if (holding.TryGetComponent(out holdCollider))
+            {
+                holdCollider.isTrigger = true;
+            }
         }
 
     }
@@ -94,6 +106,24 @@ public struct Hand
             else
             {
                 Debug.Log("Released an object without a GrabbableComponent! Doublecheck that " + holding.name + " has a GrabbableComponent attached.");
+            }
+
+            Rigidbody holdRB;
+            if(!holding.TryGetComponent(out holdRB))
+            {
+                holdRB = holding.AddComponent<Rigidbody>();
+            }
+
+            holdRB.isKinematic = false;
+
+            Collider holdCollider;
+            if (holding.TryGetComponent(out holdCollider))
+            {
+                holdCollider.isTrigger = false;
+            }
+            else
+            {
+                Debug.LogError("UH OH, THERE'S AN OBJECT WITHOUT A COLLIDER FALLING THROUGH THE VOID");
             }
 
             holding = null;

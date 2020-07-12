@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 202432107}
   - component: {fileID: 202432109}
   - component: {fileID: 202432108}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518650883325865}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L_Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2222518651025388131}
   - component: {fileID: 2222518651025388130}
   - component: {fileID: 1737325471}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651028890024}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 'Hand_R_Origin '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651277589659}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L_Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: 55040e210fa9b426b861a26909ab4de7, type: 3}
@@ -396,7 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651292723244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_R_Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: 55040e210fa9b426b861a26909ab4de7, type: 3}
@@ -426,7 +426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651351099015}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 2222518651709343561}
   - component: {fileID: 2222518651709343560}
   - component: {fileID: 2222518651709343563}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 567
+    m_Bits: 1591
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 4c4eacb8814b5d44dbd0904b24cb4a47, type: 2}
   m_TargetDisplay: 0
@@ -666,7 +666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651807582385}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HeadOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,7 +700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2222518651862913352}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,6 +1075,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hand_Graphics R
       objectReference: {fileID: 0}
+    - target: {fileID: 3675910126556442837, guid: 5daaa94f6ba16984a85ac1423fb18639,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5daaa94f6ba16984a85ac1423fb18639, type: 3}
 --- !u!4 &2060034291731895341 stripped
@@ -1155,6 +1160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hand_Graphics L
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824235181237731261, guid: 5936c7b678aaf7946b5a6f1ab99f439b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5936c7b678aaf7946b5a6f1ab99f439b, type: 3}
